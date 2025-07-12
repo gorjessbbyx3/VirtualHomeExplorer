@@ -22,7 +22,7 @@ const upload = multer({
     if (allowedTypes.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error('Only JPEG and PNG files are allowed'), false);
+      cb(new Error('Only JPEG and PNG files are allowed'));
     }
   },
   limits: {
@@ -90,7 +90,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Update tour with photo count
       await storage.updateTour(tourId, {
-        totalPhotos: tour.totalPhotos + files.length,
+        totalPhotos: (tour.totalPhotos || 0) + files.length,
         status: "processing",
         processingStep: "analysis"
       });

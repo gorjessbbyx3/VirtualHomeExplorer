@@ -188,9 +188,9 @@ export function initThreeViewer(canvas: HTMLCanvasElement, rooms: Room[]) {
   // Room switching function
   let currentRoomIndex = 0;
   const switchRoom = (roomIndex: number) => {
-    if (roomIndex >= 0 && roomIndex < roomMaterials.length) {
+    if (roomIndex >= 0 && roomIndex < Math.min(roomMaterials.length, rooms.length)) {
       currentRoomIndex = roomIndex;
-      mesh.material = roomMaterials[roomIndex];
+      mesh.material = roomMaterials[roomIndex % roomMaterials.length];
       
       // Add transition effect
       const originalOpacity = (mesh.material as THREE.MeshBasicMaterial).opacity || 1;

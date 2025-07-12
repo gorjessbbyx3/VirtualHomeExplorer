@@ -7,6 +7,7 @@ VirtualTour AI is a full-stack web application that transforms regular property 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+No mock, fake, or demo components - use only real data and functionality.
 
 ## System Architecture
 
@@ -100,3 +101,14 @@ Centralized state management using Zustand with the following key states:
 - `npm run db:push`: Applies database schema changes
 
 The application is designed to scale from prototype to production with a clear separation of concerns and modular architecture that supports the complex AI processing pipeline while maintaining a smooth user experience.
+
+## Recent Changes (January 2025)
+
+- ✓ Removed all mock/demo components and placeholder data
+- ✓ Fixed TypeScript errors in storage and routes
+- ✓ Enhanced Three.js viewer to use real room data
+- ✓ Added static file serving for uploaded images
+- ✓ Made processing section show actual detected rooms
+- ✓ Updated tour information to display real data from backend
+- ✓ Implemented dynamic floor plan based on actual rooms
+- ✓ Connected room switching functionality with store state

@@ -38,8 +38,12 @@ export class MemStorage implements IStorage {
   async createTour(insertTour: InsertTour): Promise<Tour> {
     const id = this.currentTourId++;
     const tour: Tour = { 
-      ...insertTour, 
-      id, 
+      id,
+      title: insertTour.title,
+      status: insertTour.status || "uploading",
+      totalPhotos: insertTour.totalPhotos || 0,
+      processedPhotos: insertTour.processedPhotos || 0,
+      processingStep: insertTour.processingStep || "upload",
       createdAt: new Date(),
       completedAt: null 
     };
@@ -62,7 +66,15 @@ export class MemStorage implements IStorage {
 
   async createRoom(insertRoom: InsertRoom): Promise<Room> {
     const id = this.currentRoomId++;
-    const room: Room = { ...insertRoom, id };
+    const room: Room = { 
+      id,
+      tourId: insertRoom.tourId,
+      name: insertRoom.name,
+      type: insertRoom.type,
+      confidence: insertRoom.confidence || 0,
+      photoCount: insertRoom.photoCount || 0,
+      thumbnailUrl: insertRoom.thumbnailUrl || null
+    };
     this.rooms.set(id, room);
     return room;
   }
@@ -83,8 +95,16 @@ export class MemStorage implements IStorage {
   async createPhoto(insertPhoto: InsertPhoto): Promise<Photo> {
     const id = this.currentPhotoId++;
     const photo: Photo = { 
-      ...insertPhoto, 
-      id, 
+      id,
+      tourId: insertPhoto.tourId,
+      roomId: insertPhoto.roomId || null,
+      filename: insertPhoto.filename,
+      originalName: insertPhoto.originalName,
+      url: insertPhoto.url,
+      thumbnailUrl: insertPhoto.thumbnailUrl || null,
+      width: insertPhoto.width || null,
+      height: insertPhoto.height || null,
+      processed: insertPhoto.processed || false,
       uploadedAt: new Date() 
     };
     this.photos.set(id, photo);

@@ -22,36 +22,7 @@ const processingSteps = [
   }
 ];
 
-const mockRooms = [
-  {
-    name: "Kitchen",
-    type: "kitchen",
-    confidence: 94,
-    photoCount: 4,
-    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200"
-  },
-  {
-    name: "Master Bedroom", 
-    type: "bedroom",
-    confidence: 97,
-    photoCount: 6,
-    image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200"
-  },
-  {
-    name: "Bathroom",
-    type: "bathroom", 
-    confidence: 91,
-    photoCount: 3,
-    image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200"
-  },
-  {
-    name: "Living Room",
-    type: "living_room",
-    confidence: 96, 
-    photoCount: 8,
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200"
-  }
-];
+
 
 export default function ProcessingSection() {
   const { currentTour, setCurrentSection, setRooms } = useTourStore();
@@ -163,14 +134,12 @@ export default function ProcessingSection() {
           <div className="mt-12">
             <h3 className="text-xl font-semibold text-gray-900 mb-6">Detected Rooms</h3>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {rooms.map((room, index) => (
+              {rooms.map((room) => (
                 <Card key={room.id} className="room-card">
                   <CardContent className="p-4">
-                    <img 
-                      src={mockRooms[index]?.image || "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200"}
-                      alt={room.name}
-                      className="w-full h-32 object-cover rounded-lg mb-3"
-                    />
+                    <div className="w-full h-32 bg-gray-200 rounded-lg mb-3 flex items-center justify-center">
+                      <span className="text-gray-500 text-sm">{room.type.replace('_', ' ')}</span>
+                    </div>
                     <div className="flex items-center justify-between">
                       <span className="font-medium text-gray-900">{room.name}</span>
                       <span className="text-sm text-accent">{room.photoCount} photos</span>

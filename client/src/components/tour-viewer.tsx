@@ -23,6 +23,12 @@ export default function TourViewer() {
     }
   }, [rooms]);
 
+  useEffect(() => {
+    if (canvasRef.current && (canvasRef.current as any).switchRoom) {
+      (canvasRef.current as any).switchRoom(currentRoomIndex);
+    }
+  }, [currentRoomIndex]);
+
   const currentRoom = rooms[currentRoomIndex];
 
   const handleFullscreen = () => {
@@ -138,11 +144,30 @@ export default function TourViewer() {
               <div className="glass-morphism p-4 rounded-xl w-48">
                 <h4 className="text-white text-sm font-medium mb-3">Floor Plan</h4>
                 <div className="relative bg-gray-800 rounded-lg p-3 h-32">
-                  {/* Simple floor plan representation */}
-                  <div className={`absolute top-2 left-2 w-8 h-6 rounded-sm ${currentRoomIndex === 0 ? 'bg-primary' : 'bg-gray-400'} opacity-80`} title="Living Room"></div>
-                  <div className={`absolute top-2 right-2 w-6 h-6 rounded-sm ${currentRoomIndex === 1 ? 'bg-primary' : 'bg-gray-400'} opacity-60`} title="Kitchen"></div>
-                  <div className={`absolute bottom-2 left-2 w-6 h-8 rounded-sm ${currentRoomIndex === 2 ? 'bg-primary' : 'bg-gray-400'} opacity-60`} title="Master Bedroom"></div>
-                  <div className={`absolute bottom-2 right-2 w-4 h-4 rounded-sm ${currentRoomIndex === 3 ? 'bg-primary' : 'bg-gray-400'} opacity-60`} title="Bathroom"></div>
+                  {/* Dynamic floor plan representation based on actual rooms */}
+                  {rooms.map((room, index) => {
+                    const positions = [
+                      { top: '8px', left: '8px', width: '32px', height: '24px' },
+                      { top: '8px', right: '8px', width: '24px', height: '24px' },
+                      { bottom: '8px', left: '8px', width: '24px', height: '32px' },
+                      { bottom: '8px', right: '8px', width: '16px', height: '16px' }
+                    ];
+                    const pos = positions[index % positions.length];
+                    
+                    return (
+                      <div 
+                        key={room.id}
+                        className={`absolute rounded-sm cursor-pointer transition-colors ${
+                          currentRoomIndex === index ? 'bg-primary' : 'bg-gray-400'
+                        } opacity-80 hover:opacity-100`}
+                        style={{
+                          ...pos
+                        }}
+                        title={room.name}
+                        onClick={() => goToRoom(index)}
+                      />
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -156,20 +181,26 @@ export default function TourViewer() {
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Tour Information</h3>
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
-                  <div className="text-sm text-neutral mb-1">Property Type</div>
-                  <div className="font-medium text-gray-900">Single Family Home</div>
+                  <div className="text-sm text-neutral mb-1">Tour Created</div>
+                  <div className="font-medium text-gray-900">
+                    {currentTour?.createdAt ? new Date(currentTour.createdAt).toLocaleDateString() : 'Today'}
+                  </div>
                 </div>
                 <div>
                   <div className="text-sm text-neutral mb-1">Total Rooms</div>
                   <div className="font-medium text-gray-900">{rooms.length} Rooms Detected</div>
                 </div>
                 <div>
-                  <div className="text-sm text-neutral mb-1">Processing Time</div>
-                  <div className="font-medium text-gray-900">4 minutes 23 seconds</div>
+                  <div className="text-sm text-neutral mb-1">Processing Status</div>
+                  <div className="font-medium text-gray-900">
+                    {currentTour?.status === 'completed' ? 'Completed' : 'Processing'}
+                  </div>
                 </div>
                 <div>
-                  <div className="text-sm text-neutral mb-1">Quality Score</div>
-                  <div className="font-medium text-accent">94% High Quality</div>
+                  <div className="text-sm text-neutral mb-1">Photos Processed</div>
+                  <div className="font-medium text-accent">
+                    {currentTour?.processedPhotos || 0} / {currentTour?.totalPhotos || 0}
+                  </div>
                 </div>
               </div>
             </CardContent>
