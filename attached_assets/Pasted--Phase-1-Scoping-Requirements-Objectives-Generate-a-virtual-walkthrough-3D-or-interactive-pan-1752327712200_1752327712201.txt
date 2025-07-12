@@ -1,0 +1,91 @@
+🔧 Phase 1: Scoping & Requirements
+Objectives:
+Generate a virtual walkthrough (3D or interactive panoramic) using standard property photos.
+
+Accept unordered or semi-structured image inputs (interior, exterior).
+
+Support web and/or mobile deployment.
+
+Must-Have Features:
+Photo uploader (drag & drop or batch import)
+
+AI-powered room recognition
+
+Automatic room stitching into 3D or panoramic views
+
+Basic navigation UI (forward/back through rooms, minimap optional)
+
+🧠 Phase 2: Tech Stack Selection
+Core AI:
+Structure-from-Motion (SfM): COLMAP, OpenMVG (photo to 3D reconstruction)
+
+Neural Radiance Fields (NeRF): Instant-NGP or NVIDIA NeRF for photorealistic walkthroughs
+
+Depth Estimation Models:
+
+MiDaS (for single-image depth estimation)
+
+DPT (Dense Prediction Transformers)
+
+Backend:
+Python (Flask/FastAPI)
+
+GPU server or cloud (AWS/GCP with GPU-enabled instances)
+
+Frontend:
+React + Three.js (for rendering 3D/360 tours)
+
+Tailwind or shadcn/ui (for styling and clean UI)
+
+Storage:
+AWS S3 / Firebase Storage for image hosting
+
+PostgreSQL / Firebase Firestore for metadata
+
+🧪 Phase 3: Development Breakdown
+1. Image Ingestion
+Build uploader UI with drag & drop
+
+Auto-categorize images by room using:
+
+CLIP (to classify contextually)
+
+YOLOv8 (for object detection — beds, sinks, etc.)
+
+2. 3D Scene Generation
+Use COLMAP to generate sparse & dense point clouds
+
+Optionally: refine with Instant-NGP for NeRF rendering
+
+Combine NeRF output with metadata (room labels, angles)
+
+Alternative MVP:
+
+Use MiDaS to extract depth per image → project into pseudo-3D panoramas using WebGL
+
+3. Tour Navigation Engine
+Construct a room graph:
+
+Nodes = Rooms
+
+Edges = Hallways, Doorways, or spatial transitions
+
+User can click arrows to navigate (like Google Street View)
+
+Use Three.js or Babylon.js to render the camera transition with animations
+
+4. UI/UX Design
+Interactive floor plan (optional)
+
+Map-based navigation bar
+
+Hotspots to click and jump to a room
+
+Mobile-responsive design with pinch/zoom
+
+🤖 Phase 4: AI Enhancements
+Room Labeling: NLP + Vision combo to auto-tag rooms ("Kitchen", "Master Bedroom")
+
+Furniture Mapping: Detect and label major furniture
+
+Lighting Correction: Enhance poorly lit photos with GAN-based light correction

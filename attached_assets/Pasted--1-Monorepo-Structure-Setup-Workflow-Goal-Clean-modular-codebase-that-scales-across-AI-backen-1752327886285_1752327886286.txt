@@ -1,0 +1,167 @@
+🧱 1. Monorepo Structure & Setup Workflow
+Goal: Clean modular codebase that scales across AI, backend, and frontend.
+
+🔧 Setup Structure:
+bash
+Copy
+Edit
+/virtual-tour-app
+├── /frontend         ← React + Three.js
+├── /backend          ← FastAPI/Flask + image processing
+├── /ai_pipeline      ← NeRF, MiDaS, CLIP models
+├── /services         ← Utils: file upload, auth, staging, narration
+├── /scripts          ← Dev tools, CLI runners
+├── /infrastructure   ← Docker, Terraform, CI/CD configs
+Workflow:
+Bootstrap each module as an isolated package
+
+Use poetry (Python) and pnpm (JS) for dependency control
+
+Use Docker compose to run the entire stack together for local dev
+
+Start with dummy data fixtures for testing AI modules without UI first
+
+🧠 2. AI/ML Model Development Workflow
+Goal: Train, fine-tune, or deploy AI models modularly and reproducibly
+
+Workflow:
+Data Prep: Write a script to parse images into labeled folders (/ai_pipeline/data/rooms/bedroom/*.jpg)
+
+Train/Test:
+
+Use notebooks/ for quick iterations
+
+Export to train.py, infer.py, and pipeline.py for production
+
+Evaluation:
+
+Log metrics using Weights & Biases or TensorBoard
+
+Deployment:
+
+Serve with FastAPI or TorchServe
+
+Wrap in predict.py with unified input/output schema (e.g. JSON: { image_url, depth_map, tags })
+
+⚙️ 3. Backend Development Workflow
+Goal: Build APIs that can handle AI results and serve content to frontend
+
+Workflow:
+Define OpenAPI schema using FastAPI
+
+Create endpoints:
+
+POST /upload-images
+
+GET /tour/{tour_id}
+
+POST /generate-tour (triggers AI pipeline)
+
+Use Celery or RQ for async task queuing (AI takes time)
+
+Add auth (JWT or Firebase)
+
+Write unit tests (pytest) + integration tests with Docker containers
+
+🎨 4. Frontend Development Workflow (React + Three.js)
+Goal: Build fast, immersive UI that integrates with the backend & AI
+
+Workflow:
+Create UI components:
+
+<Uploader />
+
+<VirtualTourViewer />
+
+<RoomMap />
+
+Use zustand or Redux for state management (especially room graph / transitions)
+
+Integrate with Three.js:
+
+Load glTF scenes
+
+Animate camera between rooms
+
+Overlay controls (arrows, buttons)
+
+Connect with backend:
+
+Fetch tour data
+
+Render room views
+
+Sync narration/audio
+
+🚦 5. DevOps / CI/CD Workflow
+Goal: Deploy often, debug less
+
+Workflow:
+Use GitHub Actions to:
+
+Run tests (backend + frontend)
+
+Build Docker images
+
+Push to staging server
+
+Auto-deploy branches to:
+
+/staging → on main
+
+/production → on release/*
+
+Use preview links (e.g., Vercel or Netlify) for frontend PRs
+
+🔁 6. Feature Branch Workflow (Code Contribution)
+Goal: Keep everyone from stepping on each other’s toes
+
+Branch Naming:
+feat/upload-ai-model
+
+fix/depth-map-scaling
+
+chore/update-packages
+
+Steps:
+git checkout -b feat/3d-room-navigator
+
+Make code changes
+
+Push & open PR
+
+Run test suite (auto)
+
+Reviewer approves + auto-deploy to staging
+
+Merge → deploy to prod on schedule
+
+📜 7. AI Pipeline Trigger Workflow (End-to-End)
+User uploads images via frontend
+
+Backend stores images → fires task to queue (Celery/RQ)
+
+AI pipeline loads model (e.g., MiDaS, NeRF) → processes images
+
+Stores:
+
+Depth maps
+
+Room classification tags
+
+3D assets (glTF)
+
+Backend updates DB → notifies frontend via WebSocket or polling
+
+Frontend re-renders virtual tour
+
+🧪 Bonus: Testing Workflow
+Frontend: Use Playwright for E2E, Vitest for unit
+
+Backend: Pytest + FastAPI test client
+
+AI:
+
+Snapshot tests for depth maps, room tagging
+
+Regression suite to ensure quality doesn’t degrade
