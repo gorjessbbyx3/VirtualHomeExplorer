@@ -112,3 +112,4 @@ The application is designed to scale from prototype to production with a clear s
 - ✓ Updated tour information to display real data from backend
 - ✓ Implemented dynamic floor plan based on actual rooms
 - ✓ Connected room switching functionality with store state
+- ✓ Removed pricing references since service is free

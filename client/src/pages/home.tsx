@@ -7,7 +7,7 @@ import FeaturesSection from "@/components/features-section";
 import HowItWorksSection from "@/components/how-it-works-section";
 
 export default function Home() {
-  const { currentSection } = useTourStore();
+  const { currentSection, setCurrentSection } = useTourStore();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -24,8 +24,10 @@ export default function Home() {
             <div className="hidden md:flex items-center space-x-8">
               <a href="#features" className="text-neutral hover:text-primary transition-colors">Features</a>
               <a href="#how-it-works" className="text-neutral hover:text-primary transition-colors">How It Works</a>
-              <a href="#pricing" className="text-neutral hover:text-primary transition-colors">Pricing</a>
-              <button className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+              <button 
+                className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                onClick={() => setCurrentSection('upload')}
+              >
                 Get Started
               </button>
             </div>
@@ -62,8 +64,8 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-4">Product</h4>
               <ul className="space-y-2 text-gray-300">
-                <li><a href="#" className="hover:text-primary transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Pricing</a></li>
+                <li><a href="#features" className="hover:text-primary transition-colors">Features</a></li>
+                <li><a href="#how-it-works" className="hover:text-primary transition-colors">How It Works</a></li>
                 <li><a href="#" className="hover:text-primary transition-colors">API</a></li>
               </ul>
             </div>
