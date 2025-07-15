@@ -31,6 +31,7 @@ export default function HeroSection() {
                 variant="outline" 
                 size="lg" 
                 className="border-2 border-primary text-primary hover:bg-primary hover:text-white text-lg px-8 py-4"
+                onClick={() => setCurrentSection('viewer')}
               >
                 <Play className="mr-2 h-5 w-5" />
                 Watch Demo

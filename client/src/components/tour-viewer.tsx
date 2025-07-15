@@ -133,6 +133,7 @@ export default function TourViewer() {
                   size="sm"
                   className="text-white hover:text-primary p-2"
                   title="Settings"
+                  onClick={() => console.log('Settings clicked - feature coming soon')}
                 >
                   <Settings className="h-5 w-5" />
                 </Button>
@@ -214,11 +215,11 @@ export default function TourViewer() {
                   <Link className="mr-2 h-4 w-4" />
                   Copy Tour Link
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full" onClick={() => console.log('Download assets - feature coming soon')}>
                   <Download className="mr-2 h-4 w-4" />
                   Download Assets
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full" onClick={() => console.log('Embed code - feature coming soon')}>
                   <Code className="mr-2 h-4 w-4" />
                   Embed Code
                 </Button>
