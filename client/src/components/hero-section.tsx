@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useTourStore } from "@/store/tour-store";
-import { Play, Upload, Check } from "lucide-react";
+import { Play, Upload, Check, Camera } from "lucide-react";
 
 export default function HeroSection() {
   const { setCurrentSection } = useTourStore();
@@ -25,7 +25,16 @@ export default function HeroSection() {
                 onClick={() => setCurrentSection('upload')}
               >
                 <Upload className="mr-2 h-5 w-5" />
-                Create Virtual Tour
+                Upload Photos
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white text-lg px-8 py-4"
+                onClick={() => setCurrentSection('broadcast')}
+              >
+                <Camera className="mr-2 h-5 w-5" />
+                Live Capture
               </Button>
               <Button 
                 variant="outline" 

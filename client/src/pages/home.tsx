@@ -1,6 +1,7 @@
 import { useTourStore } from "@/store/tour-store";
 import HeroSection from "@/components/hero-section";
 import UploadSection from "@/components/upload-section";
+import BroadcastSection from "@/components/broadcast-section";
 import ProcessingSection from "@/components/processing-section";
 import TourViewer from "@/components/tour-viewer";
 import FeaturesSection from "@/components/features-section";
@@ -25,10 +26,16 @@ export default function Home() {
               <a href="#features" className="text-neutral hover:text-primary transition-colors">Features</a>
               <a href="#how-it-works" className="text-neutral hover:text-primary transition-colors">How It Works</a>
               <button 
+                className="text-neutral hover:text-primary transition-colors bg-transparent border-none"
+                onClick={() => setCurrentSection('broadcast')}
+              >
+                Live Capture
+              </button>
+              <button 
                 className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                 onClick={() => setCurrentSection('upload')}
               >
-                Get Started
+                Upload Photos
               </button>
             </div>
           </div>
@@ -45,6 +52,7 @@ export default function Home() {
       )}
       
       {currentSection === 'upload' && <UploadSection />}
+      {currentSection === 'broadcast' && <BroadcastSection />}
       {currentSection === 'processing' && <ProcessingSection />}
       {currentSection === 'viewer' && <TourViewer />}
 

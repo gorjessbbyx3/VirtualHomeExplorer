@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { Tour, Room, Photo } from '@shared/schema';
 
-export type AppSection = 'home' | 'upload' | 'processing' | 'viewer';
+export type AppSection = 'home' | 'upload' | 'broadcast' | 'processing' | 'viewer';
 
 interface TourStore {
   // Current state
